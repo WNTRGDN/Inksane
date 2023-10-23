@@ -1,0 +1,16 @@
+@import 'globals.scss';
+
+@import '_bootstrap';
+@import '_fonts';
+@import '_header';
+@import '_footer';
+
+@import '../blocks/jumbotron/jumbotron';
+@import '../blocks/products/products';
+@import '../blocks/teasers/teasers';
+@import '../blocks/product/product';
+@import '../blocks/text/text';
+@import '../blocks/cart/cart';
+@import '../blocks/image/image';
+@import '../blocks/split/split';
+@import '../blocks/checkout/checkout';

@@ -1,0 +1,58 @@
+.footer {
+    background-color: $secondary;
+    color: $white;
+    a {
+        color: $white;
+        text-decoration: none;
+    }
+    h4 {
+        font-size: 16px;
+        font-weight: bold;
+    }
+    dl {
+        dt {
+            margin-bottom: 5px;
+        }
+        dd {
+            margin-bottom: 15px;
+        }
+    }
+}
+
+.wntrForm {
+    &__field {
+        margin-bottom: var(--bs-gutter-x);
+        display: flex;
+        input, textarea {
+            border-radius: 0;
+            outline: auto;
+            background: transparent;
+            &:focus {
+                border-color: transparent;
+                outline: auto;
+                background-color: transparent;
+                color: var(--wntr-white-color);
+                box-shadow: none;
+            }
+        }
+        button {
+            background-color: transparent;
+            border-color: transparent;
+            margin-left: auto;
+            transition: 0.1s transform linear, 0.1s -webkit-filter linear;
+            &::after {
+                content: "Next";
+                color: transparent;
+                background-image: url(../public/arrow.svg);
+                background-repeat: no-repeat;
+                background-position: center;
+                margin-left: calc(var(--bs-gutter-x) * 0.5);
+            }
+            &:hover, &:focus {
+                background-color: transparent;
+                border-color: transparent;
+                transform: translateX(calc(var(--bs-gutter-x) * 0.5));
+            }
+        }
+    }
+}

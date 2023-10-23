@@ -1,0 +1,44 @@
+@import '../../node_modules/bootstrap/scss/variables';
+
+.wntrTeasersBlock {
+    background-color: var(--wntr-secondary-color);
+    @media (min-width: 767px) {
+        padding-right: calc(100vw - 80%);
+        padding-left: calc(100vw - 80%);
+    }
+    color: var(--wntr-white-color);
+    a {
+        text-decoration: none;
+        color: var(--wntr-white-color);
+        margin-bottom: calc(var(--bs-gutter-x) * 3);
+    }
+    &__teaser {
+        position: relative;
+        padding: var(--bs-gutter-x);
+        border: 1px solid var(--wntr-white-color);
+        .wntrForm__field {
+            margin-top: var(--bs-gutter-x);
+            margin-bottom: 0;
+        }
+        transition: 0.2s transform linear, 0.2s -webkit-filter linear;
+        &:hover, &:focus {
+            border-color: var(--wntr-quinary-color);
+            transform: translateY(-15px);
+        }
+    }
+    &__heading {
+        margin-top: calc(var(--bs-gutter-x) * 3);
+        margin-bottom: calc(var(--bs-gutter-x) * 2);
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 22px;
+        letter-spacing: 2px;
+        font-weight: normal;
+    }
+    &__text {
+        small {
+            font-size: 14px;
+            font-weight: normal;
+        }
+    }
+}

@@ -1,0 +1,53 @@
+@import '../../node_modules/bootstrap/scss/variables';
+
+.wntrSplitBlock {
+    margin-top: calc(var(--bs-gutter-x) * 2);
+    margin-bottom: calc(var(--bs-gutter-x) * 2);
+    background-color: var(--wntr-secondary-color);
+    &__col {
+        padding: 0;
+    }
+    .wntrTextBlock {
+        position: relative;
+        color: var(--wntr-white-color);
+        width: 100%;
+        padding: calc(var(--bs-gutter-x) * 2);
+        @media (min-width: map-get($grid-breakpoints, "xl")) {
+            padding: calc(var(--bs-gutter-x) * 0.5);
+            > .container {
+                position: absolute;
+                transform: translate(0%, -50%);
+                top: 50%;
+                width: 80%;
+            }
+          }
+        h1, h2, h3, h4, h5 {
+            letter-spacing: 2px;
+            margin-bottom: calc(var(--bs-gutter-x) * 2);
+        }
+        a {
+            color: var(--wntr-white-color);
+            text-decoration: none;
+        }
+    }
+    .wntrImageBlock {
+        width: 100%;
+        border: 1px solid var(--wntr-quaternary-color);
+        padding: val(--bs-gutter-x);
+    }
+
+    // inverted
+    &-inverted {
+        .wntrSplitBlock {
+            &__col {
+                background-color: transparent;
+            }
+        }
+        .wntrTextBlock {
+            color: var(--wntr-primary-color);
+            a {
+                color: var(--wntr-primary-color);
+            }
+        }
+    }
+}

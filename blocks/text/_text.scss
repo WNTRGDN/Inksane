@@ -1,0 +1,19 @@
+@import '../../node_modules/bootstrap/scss/variables';
+
+.wntrTextBlock {
+    background-color: var(--wntr-secondary-color);
+    margin-top: calc(var(--bs-gutter-x) * 2);
+    padding: calc(var(--bs-gutter-x) * 2);
+    color: var(--wntr-white-color);
+    a {
+        color: var(--wntr-white-color);
+        text-underline-offset: 0.5em;
+    }
+    @media (max-width: map-get($grid-breakpoints, "sm")) {
+        padding: var(--bs-gutter-x);
+    }
+    h3 {
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+}

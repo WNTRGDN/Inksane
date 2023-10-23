@@ -1,0 +1,50 @@
+.header {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    &__navbar {
+        margin-top: -1px;
+        @media (min-width: 767px) {
+            padding-top: 0;
+            padding-bottom: 0;
+            .onTheMove {
+                background-color: var(--wntr-secondary-color);
+            }
+        }
+        @media (max-width: 767px) {
+            background-color: var(--wntr-primary-color);
+        }
+        .navbar-toggler {
+            background-color: var(--wntr-white-color);
+        }
+    }
+    &__navigation {
+        &-item {
+            a {
+                color: var(--wntr-primary-color);
+                @media (min-width: 767px) {
+                    color: var(--wntr-white-color);
+                }
+                text-decoration: none;
+                text-transform: uppercase;
+                font-weight: 400;
+                border: 1px solid transparent;
+                padding-top: 50px;
+                padding-bottom: 15px;
+                transition: border-color 0.3s linear;
+                &:hover, &:focus, &.active {
+                    color: $yellow !important;
+                }
+                &.active {
+                    @media (min-width: 767px) {
+                        border-color: var(--wntr-quaternary-color);
+                    }
+                }
+            }
+        }
+    }
+    &__branding {
+        img {
+            height: 60px
+        }
+    }
+}
