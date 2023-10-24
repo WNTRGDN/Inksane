@@ -8,6 +8,10 @@ const Checkout: FC<ICheckout> = (block) => {
     const searchParams = useSearchParams()
     const success = searchParams.get('success')
 
+    if (success) {
+        console.log('here is where the items would be removed from the cart')
+    }
+
     return (
         <article className={block.alias}>
             <Container>
