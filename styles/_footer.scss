@@ -20,6 +20,25 @@
 }
 
 .wntrForm {
+    position: relative;
+    &:after {
+        content: "";
+        transition: opacity 0.3s;
+        opacity: 0;
+    }
+    &-submitted {
+        >div {
+          opacity: 0.1;  
+        }
+        &:after {
+            content: attr(data-success-message);
+            position: absolute;
+            text-align: center;
+            top: 40%;
+            width: 100%;
+            opacity: 1;
+        }
+    }
     &__field {
         margin-bottom: var(--bs-gutter-x);
         display: flex;
@@ -27,6 +46,7 @@
             border-radius: 0;
             outline: auto;
             background: transparent;
+            color: var(--wntr-white-color);
             &:focus {
                 border-color: transparent;
                 outline: auto;
@@ -52,6 +72,10 @@
                 background-color: transparent;
                 border-color: transparent;
                 transform: translateX(calc(var(--bs-gutter-x) * 0.5));
+            }
+            &:disabled, .disabled {
+                border-color: var(--wntr-secondary-color);
+                background-color: var(--wntr-secondary-color);
             }
         }
     }
