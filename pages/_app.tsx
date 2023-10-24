@@ -23,9 +23,13 @@ export default function App({ Component, pageProps }: AppProps) {
     remove
   })
   useEffect(() => {
-    if (cookies.inksane.length != cart.items.length) {
-      setCart(Object.assign({}, cart, [] as Array<ISessionLineItem>))
-      cookies.inksane.forEach((product: ISessionLineItem) => cart.add(product))
+    if (cookies.inksane == undefined) {
+      setCookie('inksane', [], { path: '/' })
+    } else {
+      if (cookies.inksane.length != cart.items.length) {
+        setCart(Object.assign({}, cart, [] as Array<ISessionLineItem>))
+        cookies.inksane.forEach((product: ISessionLineItem) => cart.add(product))
+      }
     }
   }, [])
   function add(item: ISessionLineItem) {
