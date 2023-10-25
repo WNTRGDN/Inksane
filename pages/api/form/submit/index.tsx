@@ -17,7 +17,7 @@ async function handler(
         url: process.env.API_HOST + '/api/forms/submit',
         headers: { 
             'Id': req.headers.id, 
-            'ApiKey': process.env.API_KEY, 
+            'ApiKey': process.env.API_KEY,
             ...data.getHeaders()
         },
         data : data

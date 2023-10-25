@@ -7,7 +7,7 @@ async function handler(
 ) {
   const headers = {
     'ApiKey': process.env.API_KEY,
-    'StripeApiKey': process.env.TEST_STRIPE_API_KEY
+    'StripeApiKey': process.env.STRIPE_API_KEY
   }
 
   axios.post(process.env.API_HOST + '/api/commerce/customer/create', req.body, {

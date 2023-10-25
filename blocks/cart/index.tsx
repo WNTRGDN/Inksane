@@ -74,10 +74,10 @@ const Cart: FC<ICart> = (block) => {
             customer: customer.id
         }
         axios.post('/api/commerce/checkout', model).then(checkout => { 
-            console.log(checkout.data)
+            console.log(checkout.data.url)
             console.log('ready to move to payment')
             setSubmitting(false)
-            //window.location = checkout.data.url
+            router.push(checkout.data.url)
         })
     }
 
