@@ -48,7 +48,9 @@ const Cart: FC<ICart> = (block) => {
             name: name,
             email: email
         }
+        console.log(data)
         axios.post('/api/commerce/customers/search', data).then(customers => {
+            console.log(customers)
             console.log('customer Search done')
             if (customers.data.length) {
                 console.log('found a customer so moving onto processing')
@@ -57,6 +59,7 @@ const Cart: FC<ICart> = (block) => {
             else {
                 console.log('no customer found so going to create one')
                 axios.post('/api/commerce/customers/create', data).then(cus => {
+                    console.log(cus)
                     console.log('created one! so moving onto checkout procession')
                     proceedToCheckout(cus.data)
                 })
@@ -66,6 +69,7 @@ const Cart: FC<ICart> = (block) => {
 
     const proceedToCheckout = async (customer: any) => {
         console.log('made it to checkout procession')
+        console.log(customer)
         const model = {
             success_url: `${window.location.protocol}//${window.location.host}${block.checkout}?success=true`,
             cancel_url: `${window.location.protocol}//${window.location.host}${block.checkout}?success=true`,
@@ -73,8 +77,10 @@ const Cart: FC<ICart> = (block) => {
             mode: 'subscription',
             customer: customer.id
         }
+        console.log(model)
+        console.log('ok. ready to go to checkout...')
         axios.post('/api/commerce/checkout', model).then(checkout => { 
-            console.log(checkout.data.url)
+            console.log(checkout.data)
             console.log('ready to move to payment')
             setSubmitting(false)
             router.push(checkout.data.url)
@@ -151,7 +157,7 @@ const Cart: FC<ICart> = (block) => {
                                         <Form.Control type="email" placeholder="Email" name="email" onChange={e => handleEmailChange(e.currentTarget.value)} />
                                     </Form.Group>
                                     <Button type="submit" className={`${block.alias}__summary-checkout`} disabled={!button}>Checkout</Button>
-                                    { submitting ? <Loading position="absolute" background="transparent" /> : null }
+                                    { submitting ? <Loading position="absolute" top="0" background="transparent" /> : null }
                                 </Form>
                             </div>
                         : null }
