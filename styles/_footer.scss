@@ -20,6 +20,7 @@
 }
 
 .wntrForm {
+    margin-top: var(--bs-gutter-x);
     position: relative;
     &:after {
         content: "";

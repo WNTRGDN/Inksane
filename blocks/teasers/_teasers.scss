@@ -1,8 +1,6 @@
-@import '../../node_modules/bootstrap/scss/variables';
-
 .wntrTeasersBlock {
     background-color: var(--wntr-secondary-color);
-    @media (min-width: 767px) {
+    @media (min-width: map-get($grid-breakpoints, "lg")) {
         padding-right: calc(100vw - 80%);
         padding-left: calc(100vw - 80%);
     }

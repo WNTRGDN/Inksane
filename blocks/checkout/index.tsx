@@ -1,15 +1,17 @@
 'use client' 
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Container, Row, Col } from 'react-bootstrap'
+import ShoppingCart from '../../utils/cart-context'
 
 const Checkout: FC<ICheckout> = (block) => {
     
     const searchParams = useSearchParams()
     const success = searchParams.get('success')
+    const cart = useContext(ShoppingCart)
 
     if (success) {
-        console.log('here is where the items would be removed from the cart')
+        cart.clear()
     }
 
     return (

@@ -20,7 +20,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const [cart, setCart] = useState({
     items: [] as Array<ISessionLineItem>,
     add,
-    remove
+    remove,
+    clear
   })
   useEffect(() => {
     if (cookies.inksane == undefined) {
@@ -42,6 +43,11 @@ export default function App({ Component, pageProps }: AppProps) {
     cart.items.splice(index, 1)
     setCart(Object.assign({}, cart, cart.items))
     setCookie('inksane', cart.items, { path: '/' })
+  }
+  function clear() {
+    cart.items = []
+    setCart(Object.assign({}, cart, []))
+    setCookie('inksane', [], { path: '/' })
   }
 
   return (

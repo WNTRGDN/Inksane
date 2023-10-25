@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react'
 import { Form as BSForm, Button } from 'react-bootstrap'
+import { Loading } from 'WNTR/components'
 import { IForm, IField } from 'WNTR/interfaces'
 import axios from 'axios'
 
@@ -32,6 +33,7 @@ const Form: FC<IForm> = (form) => {
             <BSForm.Group className="wntrForm__field">
                 <Button type="submit" disabled={submitting}>{form.submitLabel}</Button>
             </BSForm.Group>
+            { submitting && !submitted ? <Loading height="100%" position="absolute" background="transparent" /> : null }
         </BSForm>
     )
 }

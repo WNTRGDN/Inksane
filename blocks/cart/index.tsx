@@ -2,6 +2,7 @@ import React, { FC, useContext, useState, useEffect } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { FormEvent } from 'react'
+import { Loading } from 'WNTR/components'
 import { IProduct, ISessionLineItem } from '../../interfaces'
 import { Container, Row, Col, Image, Button, Form } from 'react-bootstrap'
 import ShoppingCart from '../../utils/cart-context'
@@ -20,6 +21,7 @@ const Cart: FC<ICart> = (block) => {
         cart.remove(item)
         block.products.splice(index, 1)
     }
+    const [submitting, setSubmitting] = useState(false)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [button, setButton] = useState(false)
@@ -40,6 +42,7 @@ const Cart: FC<ICart> = (block) => {
     
     const runCheckout  = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        setSubmitting(true)
         var data = {
             name: name,
             email: email
@@ -65,7 +68,9 @@ const Cart: FC<ICart> = (block) => {
             customer: customer.id
         }
         axios.post('/api/commerce/checkout', model).then(checkout => { 
+            setSubmitting(false)
             router.push(checkout.data.url)
+            console.log(checkout.data.url)
         })
     }
 
@@ -98,48 +103,51 @@ const Cart: FC<ICart> = (block) => {
                         ) }
                     </Col>
                     <Col xs={12} lg={4}>
-                        <div className={`${block.alias}__summary`}>
-                            <h3 className="mb-4">Summary</h3>
-                            <table className={`${block.alias}__summary-table`}>
-                                <tbody>
-                                    <tr>
-                                        <td>Subtotal ({block.products.length} items)</td>
-                                        <td>${block.products.reduce((total, a) => total + a.defaultPrice.unitAmountDecimal, 0).toFixed(2)}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Currency</td>
-                                        <td>AUD</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Shipping & Handling</td>
-                                        <td>$0.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tax</td>
-                                        <td>Included</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <table className={`${block.alias}__summary-table`}>
-                                <tbody>
-                                    <tr>
-                                        <td><h4>Total</h4></td>
-                                        <td><h4>${block.products.reduce((total, a) => total + a.defaultPrice.unitAmountDecimal, 0).toFixed(2)}</h4></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <Form className="wntrForm" onSubmit={runCheckout}>
-                                <Form.Group className="wntrForm__field" controlId="name">
-                                    <Form.Label className="visually-hidden">Name</Form.Label>
-                                    <Form.Control type="text" placeholder="Name" name="name" onChange={e => handleNameChange(e.currentTarget.value)} />
-                                </Form.Group>
-                                <Form.Group className="wntrForm__field" controlId="email">
-                                    <Form.Label className="visually-hidden">Email</Form.Label>
-                                    <Form.Control type="email" placeholder="Email" name="email" onChange={e => handleEmailChange(e.currentTarget.value)} />
-                                </Form.Group>
-                                <Button type="submit" className={`${block.alias}__summary-checkout`} disabled={!button}>Checkout</Button>
-                            </Form>
-                        </div>
+                        { cart.items.length ?
+                            <div className={`${block.alias}__summary`}>
+                                <h3 className="mb-4">Summary</h3>
+                                <table className={`${block.alias}__summary-table`}>
+                                    <tbody>
+                                        <tr>
+                                            <td>Subtotal ({block.products.length} items)</td>
+                                            <td>${block.products.reduce((total, a) => total + a.defaultPrice.unitAmountDecimal, 0).toFixed(2)}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Currency</td>
+                                            <td>AUD</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Shipping & Handling</td>
+                                            <td>$0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tax</td>
+                                            <td>Included</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table className={`${block.alias}__summary-table`}>
+                                    <tbody>
+                                        <tr>
+                                            <td><h4>Total</h4></td>
+                                            <td><h4>${block.products.reduce((total, a) => total + a.defaultPrice.unitAmountDecimal, 0).toFixed(2)}</h4></td>
+                                        </tr>
+                                    </tbody>
+                                </table>                            
+                                <Form className="wntrForm" onSubmit={runCheckout}>
+                                    <Form.Group className="wntrForm__field" controlId="name">
+                                        <Form.Label className="visually-hidden">Name</Form.Label>
+                                        <Form.Control type="text" placeholder="Name" name="name" onChange={e => handleNameChange(e.currentTarget.value)} />
+                                    </Form.Group>
+                                    <Form.Group className="wntrForm__field" controlId="email">
+                                        <Form.Label className="visually-hidden">Email</Form.Label>
+                                        <Form.Control type="email" placeholder="Email" name="email" onChange={e => handleEmailChange(e.currentTarget.value)} />
+                                    </Form.Group>
+                                    <Button type="submit" className={`${block.alias}__summary-checkout`} disabled={!button}>Checkout</Button>
+                                    { submitting ? <Loading position="absolute" background="transparent" /> : null }
+                                </Form>
+                            </div>
+                        : null }
                     </Col>
                 </Row>
             </Container>
