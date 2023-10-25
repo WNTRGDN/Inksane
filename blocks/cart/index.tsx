@@ -43,21 +43,21 @@ const Cart: FC<ICart> = (block) => {
     const runCheckout  = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         setSubmitting(true)
-        router.push('runCheckout')
+        console.log('runCheckout')
         var data = {
             name: name,
             email: email
         }
         axios.post('/api/commerce/customers/search', data).then(customers => {
-            router.push('customer Search done')
+            console.log('customer Search done')
             if (customers.data.length) {
-                router.push('found a customer so moving onto processing')
+                console.log('found a customer so moving onto processing')
                 proceedToCheckout(customers.data[0])
             }
             else {
-                router.push('no customer found so going to create one')
+                console.log('no customer found so going to create one')
                 axios.post('/api/commerce/customers/create', data).then(cus => {
-                    router.push('created one! so moving onto checkout procession')
+                    console.log('created one! so moving onto checkout procession')
                     proceedToCheckout(cus.data)
                 })
             }
@@ -65,7 +65,7 @@ const Cart: FC<ICart> = (block) => {
     }
 
     const proceedToCheckout = async (customer: any) => {
-        router.push('made it to checkout procession')
+        console.log('made it to checkout procession')
         const model = {
             success_url: `${window.location.protocol}//${window.location.host}${block.checkout}?success=true`,
             cancel_url: `${window.location.protocol}//${window.location.host}${block.checkout}?success=true`,
@@ -74,7 +74,7 @@ const Cart: FC<ICart> = (block) => {
             customer: customer.id
         }
         axios.post('/api/commerce/checkout', model).then(checkout => { 
-            router.push('ready to move to payment')
+            console.log('ready to move to payment')
             setSubmitting(false)
             router.push(checkout.data.url)
             console.log(checkout.data.url)
