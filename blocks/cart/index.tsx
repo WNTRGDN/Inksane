@@ -77,7 +77,7 @@ const Cart: FC<ICart> = (block) => {
             console.log(checkout.data)
             console.log('ready to move to payment')
             setSubmitting(false)
-            window.location = checkout.data.url
+            //window.location = checkout.data.url
         })
     }
 
