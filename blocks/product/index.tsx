@@ -11,7 +11,8 @@ const Product: FC<IProduct> = (product) => {
     const item: ISessionLineItem = {
         product: product.id,
         price: product.defaultPriceId,
-        quantity: 1
+        quantity: 1,
+        recurring: product.defaultPrice.type === 'recurring'
     }
 
     const addToCart = () => {
@@ -39,11 +40,15 @@ const Product: FC<IProduct> = (product) => {
                             </Col>
                             <Col xs={6}>
                                 <div className="wntrForm__field">
-                                    <Button type="button" onClick={added ? removeFromCart : addToCart}>{added ? `Remove` : `Add to cart`}</Button>
+                                    <Button disabled={!product.active} type="button" onClick={added ? removeFromCart : addToCart}>{added ? `Remove` : `Add to cart`}</Button>
                                 </div>
+                            </Col>
+                            <Col xs={12}>
+                                <hr className="mb-5" />
                             </Col>
                         </Row>
                         <p className={`${product.alias}__description`}>{product.description}</p>
+                        <div className={`${product.alias}__text`} dangerouslySetInnerHTML={{ __html: product.details }}></div>
                     </Col>
                 </Row>
             </Container>

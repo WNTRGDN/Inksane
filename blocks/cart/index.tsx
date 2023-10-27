@@ -11,12 +11,14 @@ const Cart: FC<ICart> = (block) => {
 
     const router = useRouter()
     const cart = useContext(ShoppingCart)
+    const mode = cart.items.filter(x => { return x.recurring === true}).length ? 'subscription' : 'payment'
     const removeFromCart = (product: IProduct) => {
         const index = block.products.indexOf(block.products.filter(block => { return block.id == product.id })[0])
         const item: ISessionLineItem = {
             product: product.id,
             price: product.defaultPriceId,
-            quantity: 1
+            quantity: 1,
+            recurring: product.defaultPrice.type === 'recurring'
         }
         cart.remove(item)
         block.products.splice(index, 1)
@@ -24,43 +26,46 @@ const Cart: FC<ICart> = (block) => {
     const [submitting, setSubmitting] = useState(false)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
     const [button, setButton] = useState(false)
     const handleNameChange = (input: string) => {
         setName(input)
         setButton(false)
-        if (name && email) {
+        if (name && email && phone) {
             setButton(true)
         }
     }
     const handleEmailChange = (input: string) => {
         setEmail(input)
         setButton(false)
-        if (name && email) {
+        if (name && email && phone) {
             setButton(true)
         }
     }
-    
+
+    const handlePhoneChange = (input: string) => {
+        setPhone(input)
+        setButton(false)
+        if (name && email && phone) {
+            setButton(true)
+        }
+    }
+
     const runCheckout  = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         setSubmitting(true)
-        console.log('runCheckout')
         var data = {
             name: name,
-            email: email
+            email: email,
+            phone: phone
         }
-        console.log(data)
         axios.post('/api/commerce/customers/search', data).then(customers => {
-            console.log(customers)
-            console.log('customer Search done')
             if (customers.data.length) {
-                console.log('found a customer so moving onto processing')
                 proceedToCheckout(customers.data[0])
             }
             else {
-                console.log('no customer found so going to create one')
                 axios.post('/api/commerce/customers/create', data).then(cus => {
-                    console.log(cus)
-                    console.log('created one! so moving onto checkout procession')
+                    cart.clear()
                     proceedToCheckout(cus.data)
                 })
             }
@@ -68,20 +73,14 @@ const Cart: FC<ICart> = (block) => {
     }
 
     const proceedToCheckout = async (customer: any) => {
-        console.log('made it to checkout procession')
-        console.log(customer)
         const model = {
             success_url: `${window.location.protocol}//${window.location.host}${block.checkout}?success=true`,
             cancel_url: `${window.location.protocol}//${window.location.host}${block.checkout}?success=true`,
             line_items: cart.items,
-            mode: 'subscription',
+            mode: mode,
             customer: customer.id
         }
-        console.log(model)
-        console.log('ok. ready to go to checkout...')
         axios.post('/api/commerce/checkout', model).then(checkout => { 
-            console.log(checkout.data)
-            console.log('ready to move to payment')
             setSubmitting(false)
             router.push(checkout.data.url)
         })
@@ -150,11 +149,15 @@ const Cart: FC<ICart> = (block) => {
                                 <Form className="wntrForm" onSubmit={runCheckout}>
                                     <Form.Group className="wntrForm__field" controlId="name">
                                         <Form.Label className="visually-hidden">Name</Form.Label>
-                                        <Form.Control type="text" placeholder="Name" name="name" onChange={e => handleNameChange(e.currentTarget.value)} />
+                                        <Form.Control required type="text" placeholder="Name" name="name" onChange={e => handleNameChange(e.currentTarget.value)} />
                                     </Form.Group>
                                     <Form.Group className="wntrForm__field" controlId="email">
                                         <Form.Label className="visually-hidden">Email</Form.Label>
-                                        <Form.Control type="email" placeholder="Email" name="email" onChange={e => handleEmailChange(e.currentTarget.value)} />
+                                        <Form.Control required type="email" placeholder="Email" name="email" onChange={e => handleEmailChange(e.currentTarget.value)} />
+                                    </Form.Group>
+                                    <Form.Group className="wntrForm__field" controlId="phone">
+                                        <Form.Label className="visually-hidden">Phone</Form.Label>
+                                        <Form.Control required type="phone" placeholder="Phone" name="phone" onChange={e => handlePhoneChange(e.currentTarget.value)} />
                                     </Form.Group>
                                     <Button type="submit" className={`${block.alias}__summary-checkout`} disabled={!button}>Checkout</Button>
                                     { submitting ? <Loading position="absolute" top="0" background="transparent" /> : null }

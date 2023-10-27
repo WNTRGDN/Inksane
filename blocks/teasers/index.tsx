@@ -26,6 +26,9 @@ const Teasers: FC<ITeasers> = (teasers) => {
                             </div>
                         </Col>
                     )}
+                    <Col xs={12}>
+                        <p className="text-center">Prefer a single ticket? <Link href="/join/single/">Click here</Link> to join the draw for one time!</p>
+                    </Col>
                 </Row>
             </Container>
         </article>

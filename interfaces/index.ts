@@ -147,6 +147,7 @@ export interface IProduct {
     images: string[],
     name: string,
     taxCodeId: string,
+    details: string,
     updated: Date,
     type: string,
     alias: string,
@@ -179,4 +180,5 @@ export interface ISessionLineItem {
     product: string;
     price: string;
     quantity: number;
+    recurring: boolean;
 }
