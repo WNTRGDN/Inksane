@@ -15,7 +15,7 @@ const Teasers: FC<ITeasers> = (teasers) => {
                         </Col>
                     : null }
                     {teasers.pages.sort((a,b) => { return a.order - b.order }).map((item, index) =>
-                        <Col as={item.link ? Link : Col} xs={12} sm={4} key={index} href={item.link}>
+                        <Col as={item.link ? Link : Col} xs={12} sm={3} key={index} href={item.link}>
                             <div className={`${teasers.alias}__teaser`}>
                                 { item.image ? <Image className={`${teasers.alias}__image`} src={`${item.image}?mode=crop&width=500&height=500`} /> : null }
                                 <h3 className={`${teasers.alias}__title`}>{item.title}</h3>
@@ -26,9 +26,6 @@ const Teasers: FC<ITeasers> = (teasers) => {
                             </div>
                         </Col>
                     )}
-                    <Col xs={12}>
-                        <p className="text-center">Prefer a single ticket? <Link href="/join/single/">Click here</Link> to join the draw for one time!</p>
-                    </Col>
                 </Row>
             </Container>
         </article>
