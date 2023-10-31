@@ -1,9 +1,5 @@
 .wntrTeasersBlock {
     background-color: var(--wntr-secondary-color);
-    @media (min-width: map-get($grid-breakpoints, "lg")) {
-        padding-right: calc(100vw - 80%);
-        padding-left: calc(100vw - 80%);
-    }
     color: var(--wntr-white-color);
     a {
         text-decoration: none;
