@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Jumbotron, Products, Teasers, Product, Text, Cart, Checkout, Image, Split } from 'WNTR/blocks'
+import { Jumbotron, Products, Teasers, Product, Text, Cart, Checkout, Image, Split, Cards } from 'WNTR/blocks'
 import { IBlock } from 'WNTR/interfaces';
 
 var controls: { [key: string]: any } = {
@@ -11,7 +11,8 @@ var controls: { [key: string]: any } = {
     Cart: Cart,
     Checkout: Checkout,
     Image: Image,
-    Split: Split
+    Split: Split,
+    Cards: Cards
 };
 
 const Block: FC<IBlock> = (block) => {

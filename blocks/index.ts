@@ -7,6 +7,7 @@ import Cart from './cart'
 import Checkout from './checkout'
 import Image from './image'
 import Split from './split'
+import Cards from './cards/cards'
 
 export {
     Jumbotron,
@@ -17,5 +18,6 @@ export {
     Cart,
     Checkout,
     Image,
-    Split
+    Split,
+    Cards
 }

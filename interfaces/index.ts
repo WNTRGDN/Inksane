@@ -61,6 +61,12 @@ export interface IMenu {
     order: number;
 }
 
+export interface ICrops {
+    Hero: string,
+    Thumbnail: string,
+    Banner: string
+}
+
 export interface ILink {
     title: string;
     url: string;
