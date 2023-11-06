@@ -31,6 +31,7 @@ export default function Index({ website, page }: { website: IWebsite, page: IPag
         <meta name="twitter:title" content={page.metaData.title ?? page.name + ' | ' + website.name} />
         <meta name="twitter:description" content={page.metaData.description} />
         <meta name="twitter:image" content={page.metaData.image} />
+        <meta name="environment" content={process.env.NEXT_PUBLIC_VERCEL_ENV} />
         <link rel="canonical" href={page.url}></link>
       </Head>
       { context.loading ? <Loading /> : null }
