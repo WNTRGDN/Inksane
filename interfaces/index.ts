@@ -5,10 +5,19 @@ export interface IWebsite {
     routes: IRoute[];
     menus: IMenu[];
     settings: ISettings;
+    gA4: string;
     socials: ISocials;
+    sitemap: IUrl[];
     form: IForm;
     createDate: Date;
     updateDate: Date;
+}
+
+export interface IUrl {
+    loc: string,
+    lastmod: string,
+    changefreq: string,
+    priority: number
 }
 
 export interface ISocials {

@@ -6,6 +6,7 @@ import { useCookies } from 'react-cookie'
 import { CookiesProvider } from 'react-cookie'
 import ShoppingCart from '../utils/cart-context'
 import Context from '../utils/context'
+import * as Analytics from 'WNTR/utils/analytics'
 import { ISessionLineItem } from 'WNTR/interfaces'
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -15,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
   router.events.on("routeChangeStart", e => setLoading({ loading: true }))
   router.events.on("routeChangeComplete", e => setLoading({ loading: false }))
   
-  // shopping cart
+  // shopping cart & analytics
   const [cookies, setCookie, removeCookie] = useCookies(['inksane'])
   const [cart, setCart] = useState({
     items: [] as Array<ISessionLineItem>,
@@ -24,6 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
     clear
   })
   useEffect(() => {
+    router.events.on("routeChangeComplete", (url: URL) => Analytics.pageview(url, ''))
     if (cookies.inksane == undefined) {
       setCookie('inksane', [], { path: '/' })
     } else {
@@ -31,6 +33,9 @@ export default function App({ Component, pageProps }: AppProps) {
         setCart(Object.assign({}, cart, [] as Array<ISessionLineItem>))
         cookies.inksane.forEach((product: ISessionLineItem) => cart.add(product))
       }
+    }
+    return () => {
+      router.events.off("routeChangeComplete", (url: URL) => Analytics.pageview(url, ''))
     }
   }, [])
   function add(item: ISessionLineItem) {
