@@ -25,7 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
     clear
   })
   useEffect(() => {
-    router.events.on("routeChangeComplete", (url: URL) => Analytics.pageview(url, ''))
+    router.events.on("routeChangeComplete", (url: URL) => Analytics.pageview(url, 'G-ZHT9M2JNLK'))
     if (cookies.inksane == undefined) {
       setCookie('inksane', [], { path: '/' })
     } else {
@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
       }
     }
     return () => {
-      router.events.off("routeChangeComplete", (url: URL) => Analytics.pageview(url, ''))
+      router.events.off("routeChangeComplete", (url: URL) => Analytics.pageview(url, 'G-ZHT9M2JNLK'))
     }
   }, [])
   function add(item: ISessionLineItem) {
