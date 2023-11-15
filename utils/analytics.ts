@@ -1,6 +1,8 @@
-export const pageview = (url: URL, id: string) => {
+export const GA_TRACKING_ID = 'G-ZHT9M2JNLK'
+
+export const pageview = (url: URL) => {
   if (typeof window.gtag !== 'undefined') {
-    window.gtag("config", id, {
+    window.gtag("config", GA_TRACKING_ID, {
       page_path: url
     })
   }
